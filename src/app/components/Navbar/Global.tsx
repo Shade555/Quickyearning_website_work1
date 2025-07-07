@@ -184,7 +184,7 @@ export default function Global({ isOpen, onToggle, onClose }: GlobalProps) {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute left-0 right-0 top-full bg-white shadow-2xl border-t border-gray-200 z-50" style={{left: '-50vw', right: '-50vw', width: '100vw'}}>
+        <div className="fixed left-0 right-0 bg-white shadow-2xl border-t border-gray-200 z-50" style={{ top: '76px', minHeight: '400px' }}>
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="dropdown__customersInner">
                 <div className="flex gap-8">
