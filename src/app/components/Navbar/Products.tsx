@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, ArrowRight, FileText, BookOpen, CreditCard, Shield, Laptop, Users, Clock, Calendar, Target, TrendingUp, BarChart3, Award, GraduationCap, Heart, Globe, DollarSign, Receipt, Building } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import './dropdown-fall.css';
 
 interface ProductSection {
   id: string;
@@ -34,14 +35,16 @@ interface ProductsProps {
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
+  textColor?: string;
+  labelAnimation?: boolean;
 }
 
 const productSections: ProductSection[] = [
   {
     id: 'hcm',
-    title: 'Rippling HCM',
+    title: 'Diamondrock HCM',
     description: 'Drive business outcomes with the #1 rated HR solution.',
-    image: 'https://rippling2.imgix.net/nav-products-hcm.png',
+    image: 'https://diamondrock2.imgix.net/nav-products-hcm.png',
     subsections: [
       {
         title: 'HR Management',
@@ -146,13 +149,13 @@ const productSections: ProductSection[] = [
       {
         title: 'The state of employment: Small and mid-sized companies',
         type: 'Report',
-        image: 'https://rippling2.imgix.net/resource-employment-report.png',
+        image: 'https://diamondrock2.imgix.net/resource-employment-report.png',
         href: '/resources/employment-report'
       },
       {
         title: 'HR Guide: Foundations for Actionable AI',
         type: 'eBook',
-        image: 'https://rippling2.imgix.net/resource-ai-guide.png',
+        image: 'https://diamondrock2.imgix.net/resource-ai-guide.png',
         href: '/resources/ai-guide'
       }
     ]
@@ -161,7 +164,7 @@ const productSections: ProductSection[] = [
     id: 'payroll',
     title: 'Payroll',
     description: 'Run payroll across all 50 states and globally in minutes.',
-    image: 'https://rippling2.imgix.net/nav-products-payroll.png',
+    image: 'https://diamondrock2.imgix.net/nav-products-payroll.png',
     subsections: [
       {
         title: 'US Payroll',
@@ -207,7 +210,7 @@ const productSections: ProductSection[] = [
     id: 'it',
     title: 'IT',
     description: 'Manage devices, apps, and security from a single platform.',
-    image: 'https://rippling2.imgix.net/nav-products-it.png',
+    image: 'https://diamondrock2.imgix.net/nav-products-it.png',
     subsections: [
       {
         title: 'Device Management',
@@ -239,7 +242,7 @@ const productSections: ProductSection[] = [
     id: 'finance',
     title: 'Finance',
     description: 'Automate accounting, reporting, and financial operations.',
-    image: 'https://rippling2.imgix.net/nav-products-finance.png',
+    image: 'https://diamondrock2.imgix.net/nav-products-finance.png',
     subsections: [
       {
         title: 'Accounting',
@@ -259,7 +262,7 @@ const productSections: ProductSection[] = [
     id: 'spend',
     title: 'Spend Management',
     description: 'Control spending with corporate cards and expense management.',
-    image: 'https://rippling2.imgix.net/nav-products-spend.png',
+    image: 'https://diamondrock2.imgix.net/nav-products-spend.png',
     subsections: [
       {
         title: 'Corporate Cards',
@@ -314,7 +317,7 @@ const getIcon = (iconName: string) => {
   return <IconComponent className="w-5 h-5" />;
 };
 
-export default function Products({ isOpen, onToggle, onClose }: ProductsProps) {
+export default function Products({ isOpen, onToggle, onClose, textColor, labelAnimation }: ProductsProps) {
   const [activeTab, setActiveTab] = useState('hcm');
 
   const activeSection = productSections.find(section => section.id === activeTab);
@@ -323,18 +326,26 @@ export default function Products({ isOpen, onToggle, onClose }: ProductsProps) {
     <div className="relative">
       {/* Trigger Button */}
       <button
-        className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-200 font-medium"
+        className={`flex items-center space-x-1 font-medium transition-colors duration-200 ${textColor ? textColor : 'text-white'} hover:text-yellow-400 bg-transparent`}
         onClick={onToggle}
         role="button"
         tabIndex={0}
+        style={{ background: 'none' }}
       >
-        <span>Products</span>
+        {labelAnimation ? (
+          <span className="relative h-6 overflow-hidden flex flex-col justify-center">
+            <span className="block transition-transform duration-300 group-hover:-translate-y-6 group-focus:-translate-y-6">Products</span>
+            <span className="block absolute left-0 top-0 w-full transition-transform duration-300 translate-y-6 group-hover:translate-y-0 group-focus:translate-y-0">Products</span>
+          </span>
+        ) : (
+          <span>Products</span>
+        )}
         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="fixed left-0 right-0 bg-white shadow-2xl border-t border-gray-200 z-50" style={{ top: '76px', minHeight: '400px' }}>
+        <div className="fixed left-0 right-0 bg-white shadow-2xl border-t border-gray-200 z-50 animate-dropdown-fall" style={{ top: '76px', minHeight: '400px' }}>
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex gap-8">
               {/* Left Navigation */}

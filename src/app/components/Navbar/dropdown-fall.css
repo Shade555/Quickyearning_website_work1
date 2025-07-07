@@ -1,0 +1,16 @@
+.animate-dropdown-fall {
+  animation: dropdown-fall 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background: #fff !important;
+}
+@keyframes dropdown-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px);
+    background: #fff;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    background: #fff;
+  }
+}

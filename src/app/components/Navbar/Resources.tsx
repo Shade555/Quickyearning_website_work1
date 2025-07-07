@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import './dropdown-fall.css';
 
 interface ResourceItem {
   id: string;
@@ -164,9 +165,11 @@ interface ResourcesProps {
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
+  textColor?: string;
+  labelAnimation?: boolean;
 }
 
-export default function Resources({ isOpen, onToggle, onClose }: ResourcesProps) {
+export default function Resources({ isOpen, onToggle, onClose, textColor, labelAnimation }: ResourcesProps) {
   const [activeTab, setActiveTab] = useState('resources');
 
   const ResourceCard = ({ resource }: { resource: ResourceItem }) => (
@@ -421,20 +424,28 @@ export default function Resources({ isOpen, onToggle, onClose }: ResourcesProps)
     <div className="relative">
       {/* Trigger Button */}
       <button
-        className="flex items-center space-x-1 text-white hover:text-yellow-400 transition-colors duration-200 font-medium"
+        className={`flex items-center space-x-1 font-medium transition-colors duration-200 ${textColor ? textColor : 'text-white'} hover:text-yellow-400 bg-transparent`}
         onClick={onToggle}
         role="button"
         tabIndex={0}
+        style={{ background: 'none' }}
       >
-        <span>Resources</span>
+        {labelAnimation ? (
+          <span className="relative h-6 overflow-hidden flex flex-col justify-center">
+            <span className="block transition-transform duration-300 group-hover:-translate-y-6 group-focus:-translate-y-6">Resources</span>
+            <span className="block absolute left-0 top-0 w-full transition-transform duration-300 translate-y-6 group-hover:translate-y-0 group-focus:translate-y-0">Resources</span>
+          </span>
+        ) : (
+          <span>Resources</span>
+        )}
         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="fixed left-0 right-0 bg-white shadow-2xl border-t border-gray-200 z-50" style={{ top: '76px', minHeight: '400px' }}>
+        <div className="fixed left-0 right-0 bg-white shadow-2xl border-t border-gray-200 z-50 animate-dropdown-fall" style={{ top: '76px', minHeight: '400px' }}>
           <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="flex">
+            <div className="flex gap-8">
               {/* Left Navigation */}
               <div className="w-64 bg-gray-50 border-r border-gray-200">
                 <div className="header__innerSlideLinks p-4">

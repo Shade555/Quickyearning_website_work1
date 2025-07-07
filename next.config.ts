@@ -2,10 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    domains: ['rippling2.imgix.net', 'diamondrock2.imgix.net'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'rippling2.imgix.net',
+        hostname: 'diamondrock2.imgix.net',
         port: '',
         pathname: '/**',
       },
